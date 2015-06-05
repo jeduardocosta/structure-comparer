@@ -9,7 +9,7 @@ namespace ClassPropertyValidator.Validators
 {
     public interface IClassPropertyValidator
     {
-        ClassPropertiesValidationResult Validate(Type baseType, Type toCompareType);
+        ClassPropertyValidationResult Validate(Type baseType, Type toCompareType);
     }
 
     public class ClassPropertyValidator : IClassPropertyValidator
@@ -19,7 +19,7 @@ namespace ClassPropertyValidator.Validators
         private readonly IPropertyValidator _propertyValidator;
         private readonly IValidationFlowFactory _validationFlowFactory;
 
-        private readonly ClassPropertiesValidationResult _validationResult;
+        private readonly ClassPropertyValidationResult _validationResult;
 
         internal ClassPropertyValidator(ITypeValidator typeValidator, 
             IBaseTypeValidator enumTypeValidator,
@@ -31,7 +31,7 @@ namespace ClassPropertyValidator.Validators
             _propertyValidator = propertyValidator;
             _validationFlowFactory = validationFlowFactory;
 
-            _validationResult = new ClassPropertiesValidationResult();
+            _validationResult = new ClassPropertyValidationResult();
         }
         
         public ClassPropertyValidator()
@@ -41,7 +41,7 @@ namespace ClassPropertyValidator.Validators
                    new ValidationFlowFactory())
         { }
 
-        public ClassPropertiesValidationResult Validate(Type baseType, Type toCompareType)
+        public ClassPropertyValidationResult Validate(Type baseType, Type toCompareType)
         {
             if (_typeValidator.IsEnum(baseType) && _typeValidator.IsEnum(toCompareType))
                 return CreateResultByEnumValidation(baseType, toCompareType);
@@ -80,7 +80,7 @@ namespace ClassPropertyValidator.Validators
             return validationFlow.Validate(baseTypeProperty.PropertyType, toCompareTypeProperty.PropertyType);
         }
 
-        private ClassPropertiesValidationResult CreateResultByEnumValidation(Type baseType, Type toCompareType)
+        private ClassPropertyValidationResult CreateResultByEnumValidation(Type baseType, Type toCompareType)
         {
             var isValid = _enumTypeValidator.Validate(baseType, toCompareType);
 
@@ -90,7 +90,7 @@ namespace ClassPropertyValidator.Validators
             return _validationResult.GetResult();
         }
 
-        private ClassPropertiesValidationResult CreateNumberOfPropertiesUnsuccessfulResult(Type baseType, Type toCompareType)
+        private ClassPropertyValidationResult CreateNumberOfPropertiesUnsuccessfulResult(Type baseType, Type toCompareType)
         {
             const string errorMessage = "number of properties are different";
             _validationResult.AddError(baseType, toCompareType, errorMessage);

@@ -4,47 +4,33 @@ using System.Linq;
 
 namespace ClassPropertyValidator.Models
 {
-    public class ClassPropertiesValidationResult
+    public class ClassPropertyValidationResult
     {
-        public bool AreEqual { get; private set; }
+        public bool AreEqual
+        {
+            get { return !HasErrors(); } 
+        }
+
         public string DifferencesString { get; private set; }
 
         private readonly IList<string> _errors;
 
-        public ClassPropertiesValidationResult()
+        public ClassPropertyValidationResult()
         {
             _errors = new List<string>();
         }
 
-        internal ClassPropertiesValidationResult GetResult()
+        internal ClassPropertyValidationResult GetResult()
         {
             if (HasErrors())
-            {
-                var differencesString = GenerateDifferencesString();
-                return CreateUnsuccessfulResult(differencesString);
-            }
+                DifferencesString = GenerateDifferencesString();
 
-            return CreateSuccessfulResult();
-        }
-
-        internal ClassPropertiesValidationResult CreateSuccessfulResult()
-        {
-            AreEqual = true;
             return this;
         }
 
-        internal ClassPropertiesValidationResult CreateUnsuccessfulResult(string differencesString)
+        internal void AddError(string errorMessage)
         {
-            DifferencesString = differencesString;
-            AreEqual = false;
-            return this;
-        }
-
-        internal ClassPropertiesValidationResult CreateUnsuccessfulResult(Type baseType, Type toCompareType)
-        {
-            AddError(baseType, toCompareType);
-            var differencesString = GenerateDifferencesString();
-            return CreateUnsuccessfulResult(differencesString);
+            _errors.Add(errorMessage);
         }
 
         internal void AddError(Type baseType, Type toCompareType, string additionalErrorMessage = null)

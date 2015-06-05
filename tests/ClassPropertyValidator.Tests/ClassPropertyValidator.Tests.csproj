@@ -73,7 +73,7 @@
     <Compile Include="Fakes\StructureA\FakeCustomerWithDifferentPropertyName.cs" />
     <Compile Include="Fakes\StructureA\FakeOrder.cs" />
     <Compile Include="Fakes\StructureB\FakeCustomer.cs" />
-    <Compile Include="Models\ClassPropertiesValidationResultTests.cs" />
+    <Compile Include="Models\ClassPropertyValidationResultTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\ClassPropertyValidatorTests.cs" />
     <Compile Include="Validators\ComplexTypeValidatorTests.cs" />
