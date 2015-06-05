@@ -9,11 +9,11 @@ namespace ClassPropertyValidator.Tests.Models
     public class ClassPropertiesValidationResultTests
     {
         [Test]
-        public void Constructor_WhenCreatingAnInstanceOfClassPropertiesValidationResultClass_MustReturnTrueToAreEqualProperty()
+        public void Constructor_WhenCreatingAnInstanceOfClassPropertiesValidationResultClass_MustReturnFalseToAreEqualProperty()
         {
             var classPropertiesValidationResult = new ClassPropertiesValidationResult();
 
-            classPropertiesValidationResult.AreEqual.Should().BeTrue();
+            classPropertiesValidationResult.AreEqual.Should().BeFalse();
         }
 
         [Test]

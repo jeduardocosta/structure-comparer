@@ -19,6 +19,8 @@ namespace ClassPropertyValidator.Validators
         private readonly IPropertyValidator _propertyValidator;
         private readonly IValidationFlowFactory _validationFlowFactory;
 
+        private readonly ClassPropertiesValidationResult _validationResult;
+
         internal ClassPropertyValidator(ITypeValidator typeValidator, 
             IBaseTypeValidator enumTypeValidator,
             IPropertyValidator propertyValidator,
@@ -28,6 +30,8 @@ namespace ClassPropertyValidator.Validators
             _enumTypeValidator = enumTypeValidator;
             _propertyValidator = propertyValidator;
             _validationFlowFactory = validationFlowFactory;
+
+            _validationResult = new ClassPropertiesValidationResult();
         }
         
         public ClassPropertyValidator()
@@ -53,14 +57,16 @@ namespace ClassPropertyValidator.Validators
                 if (!_propertyValidator.ValidateNameExistance(baseTypeProperty, toCompareTypeProperties))
                 {
                     var errorMessage = CreateDistinctPropertyNamesErrorMessage(baseTypeProperty, toCompareType);
-                    return CreateUnsuccessfulResult(baseType, toCompareType, errorMessage);
+                    _validationResult.AddError(baseType, toCompareType, errorMessage);
                 }
-
-                if (!IsValidByValidationFlow(baseTypeProperty, toCompareTypeProperties))
-                    return CreateUnsuccessfulResult(baseType, toCompareType);
+                else
+                {
+                    if (!IsValidByValidationFlow(baseTypeProperty, toCompareTypeProperties))
+                        _validationResult.AddError(baseType, toCompareType);
+                }
             }
 
-            return CreateSuccessfulResult();
+            return _validationResult.GetResult();
         }
 
         private bool IsValidByValidationFlow(PropertyInfo baseTypeProperty, IEnumerable<PropertyInfo> toCompareTypeProperties)
@@ -78,37 +84,22 @@ namespace ClassPropertyValidator.Validators
         {
             var isValid = _enumTypeValidator.Validate(baseType, toCompareType);
 
-            if (isValid) 
-                return CreateSuccessfulResult();
+            if (!isValid)
+                _validationResult.AddError(baseType, toCompareType);
 
-            return CreateUnsuccessfulResult(baseType, toCompareType);
-        }
-
-        private ClassPropertiesValidationResult CreateSuccessfulResult()
-        {
-            return new ClassPropertiesValidationResult().CreateSuccessfulResult();
+            return _validationResult.GetResult();
         }
 
         private ClassPropertiesValidationResult CreateNumberOfPropertiesUnsuccessfulResult(Type baseType, Type toCompareType)
         {
             const string errorMessage = "number of properties are different";
-            return CreateUnsuccessfulResult(baseType, toCompareType, errorMessage);
+            _validationResult.AddError(baseType, toCompareType, errorMessage);
+            return _validationResult.GetResult();
         }
 
-        private string CreateDistinctPropertyNamesErrorMessage(PropertyInfo baseTypeProperty, Type toCompareType)
+        private static string CreateDistinctPropertyNamesErrorMessage(PropertyInfo baseTypeProperty, Type toCompareType)
         {
             return string.Format("property name '{0}' was not found in type '{1}'", baseTypeProperty.Name, toCompareType.Name);
-        }
-
-        private ClassPropertiesValidationResult CreateUnsuccessfulResult(Type baseType, Type toCompareType, string additionalErrorMessage = null)
-        {
-            var unsuccessfulResultMessage = string.Format("Failed to validate types. Type 1: '{0}', Type 2: '{1}'",
-                                                          baseType.Name, toCompareType.Name);
-
-            if (!string.IsNullOrWhiteSpace(additionalErrorMessage))
-                unsuccessfulResultMessage += ". Reason: " + additionalErrorMessage;
-
-            return new ClassPropertiesValidationResult().CreateUnsuccessfulResult(unsuccessfulResultMessage);
         }
     }
 }
