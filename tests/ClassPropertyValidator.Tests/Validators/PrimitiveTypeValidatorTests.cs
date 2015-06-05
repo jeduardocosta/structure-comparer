@@ -8,12 +8,12 @@ namespace ClassPropertyValidator.Tests.Validators
     [TestFixture]
     public class PrimitiveTypeValidatorTests
     {
-        private ITypeBaseValidator _enumTypeBaseValidator;
+        private IBaseTypeValidator _primitiveTypeValidator;
 
         [SetUp]
         public void SetUp()
         {
-            _enumTypeBaseValidator = new PrimitiveTypeBaseValidator();
+            _primitiveTypeValidator = new PrimitiveTypeValidator();
         }
 
         [TestCase(typeof(int), typeof(int))]
@@ -45,7 +45,7 @@ namespace ClassPropertyValidator.Tests.Validators
         [TestCase(typeof(TimeSpan), typeof(TimeSpan))]
         public void Validate_GivenTwoPrimitiveTypes_ShouldRetunTrueToValidationResult(Type baseType, Type toCompareType)
         {
-            var result = _enumTypeBaseValidator.Validate(baseType, toCompareType);
+            var result = _primitiveTypeValidator.Validate(baseType, toCompareType);
 
             result.Should().BeTrue();
         }
@@ -77,7 +77,7 @@ namespace ClassPropertyValidator.Tests.Validators
         [TestCase(typeof(TimeSpan?), typeof(TimeSpan?))]
         public void Validate_GivenTwoPrimitiveNullableTypes_ShouldRetunTrueToValidationResult(Type baseType, Type toCompareType)
         {
-            var result = _enumTypeBaseValidator.Validate(baseType, toCompareType);
+            var result = _primitiveTypeValidator.Validate(baseType, toCompareType);
 
             result.Should().BeTrue();
         }

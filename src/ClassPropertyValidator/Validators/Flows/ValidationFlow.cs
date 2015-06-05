@@ -12,14 +12,14 @@ namespace ClassPropertyValidator.Validators.Flows
     internal class ValidationFlow : IValidationFlow
     {
         private readonly ITypeValidator _typeValidator;
-        private readonly ITypeBaseValidator _typeBaseValidator;
+        private readonly IBaseTypeValidator _baseTypeValidator;
 
         private IEnumerable<Func<Type, Type, bool>> _validations;
 
-        public ValidationFlow(ITypeValidator typeValidator, ITypeBaseValidator typeBaseValidator)
+        public ValidationFlow(ITypeValidator typeValidator, IBaseTypeValidator baseTypeValidator)
         {
             _typeValidator = typeValidator;
-            _typeBaseValidator = typeBaseValidator;
+            _baseTypeValidator = baseTypeValidator;
         }
 
         public bool Validate(Type baseType, Type toCompareType)
@@ -27,7 +27,7 @@ namespace ClassPropertyValidator.Validators.Flows
             _validations = new List<Func<Type, Type, bool>>
             {
                 _typeValidator.ValidateName,
-                _typeBaseValidator.Validate
+                _baseTypeValidator.Validate
             };
 
             return _validations

@@ -63,22 +63,24 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Exception\ClassPropertiesValidationExceptionTests.cs" />
+    <Compile Include="Extensions\PropertyInfoExtensionsTests.cs" />
     <Compile Include="Fakes\FakeEnum.cs" />
     <Compile Include="Fakes\FakeEnumDifferentNames.cs" />
     <Compile Include="Fakes\FakeEnumWrongValues.cs" />
     <Compile Include="Fakes\FakeEnumUnorderedNames.cs" />
     <Compile Include="Fakes\StructureA\FakeCustomer.cs" />
     <Compile Include="Fakes\StructureA\FakeCustomerPropertyWithUpperCase.cs" />
+    <Compile Include="Fakes\StructureA\FakeCustomerWithDifferentPropertyName.cs" />
     <Compile Include="Fakes\StructureA\FakeOrder.cs" />
     <Compile Include="Fakes\StructureB\FakeCustomer.cs" />
     <Compile Include="Models\ClassPropertiesValidationResultTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Validators\ComplexTypeBaseValidatorTests.cs" />
+    <Compile Include="Validators\ClassPropertyValidatorTests.cs" />
+    <Compile Include="Validators\ComplexTypeValidatorTests.cs" />
     <Compile Include="Validators\EnumTypeValidatorTests.cs" />
     <Compile Include="Validators\Flows\Factories\ValidationFlowFactoryTests.cs" />
     <Compile Include="Validators\PrimitiveTypeValidatorTests.cs" />
     <Compile Include="Validators\PropertyValidatorTests.cs" />
-    <Compile Include="Validators\TypeTypeValidatorTests.cs" />
     <Compile Include="Validators\TypeValidatorTests.cs" />
   </ItemGroup>
   <ItemGroup />

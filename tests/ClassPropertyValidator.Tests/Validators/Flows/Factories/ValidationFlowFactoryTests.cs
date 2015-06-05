@@ -1,8 +1,8 @@
 ﻿using ClassPropertyValidator.Tests.Fakes;
 using ClassPropertyValidator.Tests.Fakes.StructureA;
+using ClassPropertyValidator.Validators.Flows;
 using ClassPropertyValidator.Validators.Flows.Factories;
 using NUnit.Framework;
-using ClassPropertyValidator.Validators.Flows;
 using FluentAssertions;
 
 namespace ClassPropertyValidator.Tests.Validators.Flows.Factories

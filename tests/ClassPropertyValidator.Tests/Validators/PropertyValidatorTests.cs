@@ -1,8 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using ClassPropertyValidator.Tests.Fakes.StructureA;
 using ClassPropertyValidator.Validators;
 using FluentAssertions;
 using NUnit.Framework;
+using System.Reflection;
+using System;
 
 namespace ClassPropertyValidator.Tests.Validators
 {
@@ -14,6 +17,9 @@ namespace ClassPropertyValidator.Tests.Validators
         private FakeCustomer _fakeCustomer;
         private FakeCustomerPropertyWithUpperCase _fakeCustomerPropertyWithUpperCase;
 
+        private Type _fakeCustomerType;
+        private Type _fakeOrderType;
+
         [SetUp]
         public void SetUp()
         {
@@ -21,6 +27,9 @@ namespace ClassPropertyValidator.Tests.Validators
 
             _fakeCustomer = new FakeCustomer();
             _fakeCustomerPropertyWithUpperCase = new FakeCustomerPropertyWithUpperCase();
+
+            _fakeCustomerType = typeof(FakeCustomer);
+            _fakeOrderType = typeof(FakeOrder);
         }
 
         [Test]
@@ -60,6 +69,36 @@ namespace ClassPropertyValidator.Tests.Validators
             var toComparePropertyInfo = lastPropertyInfo;
 
             var result = _propertyValidator.ValidateName(basePropertyInfo, toComparePropertyInfo);
+
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void ValidateNameExistance_GivenFirstNamePropertyAndValidPropertiesCollections_ShouldReturnTrueToValidationResult()
+        {
+            var property = _fakeCustomerType.GetProperty("FirstName");
+            var properties = new List<PropertyInfo>
+            {
+                _fakeCustomerType.GetProperty("FirstName"),
+                _fakeCustomerType.GetProperty("LastName"),
+            };
+
+            var result = _propertyValidator.ValidateNameExistance(property, properties);
+
+            result.Should().BeTrue();
+        }
+
+        [Test]
+        public void ValidateNameExistance_GivenIdPropertyAndInvalidPropertiesCollections_ShouldReturnFalseToValidationResult()
+        {
+            var property = _fakeOrderType.GetProperty("Id");
+            var properties = new List<PropertyInfo>
+            {
+                _fakeCustomerType.GetProperty("FirstName"),
+                _fakeCustomerType.GetProperty("LastName"),
+            };
+
+            var result = _propertyValidator.ValidateNameExistance(property, properties);
 
             result.Should().BeFalse();
         }

@@ -9,30 +9,28 @@ namespace ClassPropertyValidator.Validators.Flows.Factories
 
     internal class ValidationFlowFactory : IValidationFlowFactory
     {
-        private readonly ITypeTypeValidator _typeValidator;
+        private readonly ITypeValidator _typeValidator;
 
-        public ValidationFlowFactory(ITypeTypeValidator typeValidator)
+        internal ValidationFlowFactory(ITypeValidator typeValidator)
         {
             _typeValidator = typeValidator;
         }
 
         public ValidationFlowFactory()
-            : this(new TypeTypeValidator())
-        {
-            
-        }
+            : this(new TypeValidator())
+        { }
 
         public IValidationFlow Create(Type type)
         {
             var typeValidator = new TypeValidator();
 
             if (_typeValidator.IsEnum(type))
-                return new ValidationFlow(typeValidator, new EnumTypeBaseValidator());
+                return new ValidationFlow(typeValidator, new EnumTypeValidator());
 
             if (_typeValidator.IsPrimitive(type))
-                return new ValidationFlow(typeValidator, new PrimitiveTypeBaseValidator());
+                return new ValidationFlow(typeValidator, new PrimitiveTypeValidator());
 
-            return new ValidationFlow(typeValidator, new ComplexTypeBaseValidator());
+            return new ValidationFlow(typeValidator, new ComplexTypeValidator());
         }
     }
 }

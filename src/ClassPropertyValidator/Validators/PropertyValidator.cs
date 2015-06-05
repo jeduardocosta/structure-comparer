@@ -1,20 +1,27 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
+using System.Linq;
 
 namespace ClassPropertyValidator.Validators
 {
     internal interface IPropertyValidator
     {
-        bool ValidateName(PropertyInfo basePropertyInfo, PropertyInfo toComparePropertyInfo);
+        bool ValidateName(PropertyInfo baseProperty, PropertyInfo toCompareProperty);
+        bool ValidateNameExistance(PropertyInfo baseProperty, IEnumerable<PropertyInfo> toCompareTypeProperties);
     }
 
     internal class PropertyValidator : IPropertyValidator
     {
-        public bool ValidateName(PropertyInfo basePropertyInfo, PropertyInfo toComparePropertyInfo)
+        public bool ValidateName(PropertyInfo baseProperty, PropertyInfo toCompareProperty)
         {
-            var basePropertyInfoName = basePropertyInfo.Name;
-            var toComparePropertyInfoName = toComparePropertyInfo.Name;
+            return baseProperty.Name == toCompareProperty.Name;
+        }
 
-            return basePropertyInfoName == toComparePropertyInfoName;
+        public bool ValidateNameExistance(PropertyInfo baseProperty, IEnumerable<PropertyInfo> toCompareTypeProperties)
+        {
+            var baseTypePropertyName = baseProperty.Name;
+            var toCompareTypeProperty = toCompareTypeProperties.FirstOrDefault(c => c.Name == baseTypePropertyName);
+            return toCompareTypeProperty != null;
         }
     }
 }

@@ -4,11 +4,11 @@ using System.Linq;
 
 namespace ClassPropertyValidator.Validators
 {
-    internal class EnumTypeBaseValidator : ITypeBaseValidator
+    internal class EnumTypeValidator : IBaseTypeValidator
     {
         private readonly IEnumerable<Func<Type, Type, bool>> _validations;
 
-        public EnumTypeBaseValidator()
+        public EnumTypeValidator()
         {
             _validations = new List<Func<Type, Type, bool>>
             {

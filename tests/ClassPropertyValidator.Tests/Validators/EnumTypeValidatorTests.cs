@@ -8,12 +8,12 @@ namespace ClassPropertyValidator.Tests.Validators
     [TestFixture]
     public class EnumTypeValidatorTests
     {
-        private ITypeBaseValidator _enumTypeBaseValidator;
+        private IBaseTypeValidator _enumTypeValidator;
 
         [SetUp]
         public void SetUp()
         {
-            _enumTypeBaseValidator = new EnumTypeBaseValidator();
+            _enumTypeValidator = new EnumTypeValidator();
         }
 
         [Test]
@@ -22,7 +22,7 @@ namespace ClassPropertyValidator.Tests.Validators
             var baseType = typeof(FakeEnum);
             var toCompareType = typeof(FakeEnum);
 
-            var result = _enumTypeBaseValidator.Validate(baseType, toCompareType);
+            var result = _enumTypeValidator.Validate(baseType, toCompareType);
 
             result.Should().BeTrue();
         }
@@ -33,7 +33,7 @@ namespace ClassPropertyValidator.Tests.Validators
             var baseType = typeof(FakeEnum);
             var toCompareType = typeof(FakeEnumDifferentNames);
 
-            var result = _enumTypeBaseValidator.Validate(baseType, toCompareType);
+            var result = _enumTypeValidator.Validate(baseType, toCompareType);
 
             result.Should().BeFalse();
         }
@@ -44,7 +44,7 @@ namespace ClassPropertyValidator.Tests.Validators
             var baseType = typeof(FakeEnum);
             var toCompareType = typeof(FakeEnumUnorderedNames);
 
-            var result = _enumTypeBaseValidator.Validate(baseType, toCompareType);
+            var result = _enumTypeValidator.Validate(baseType, toCompareType);
 
             result.Should().BeFalse();
         }
@@ -55,7 +55,7 @@ namespace ClassPropertyValidator.Tests.Validators
             var baseType = typeof(FakeEnum);
             var toCompareType = typeof(FakeEnumWrongValues);
 
-            var result = _enumTypeBaseValidator.Validate(baseType, toCompareType);
+            var result = _enumTypeValidator.Validate(baseType, toCompareType);
 
             result.Should().BeFalse();
         }

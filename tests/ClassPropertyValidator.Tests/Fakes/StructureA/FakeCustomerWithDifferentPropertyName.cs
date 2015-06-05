@@ -3,17 +3,17 @@ using System.Collections.Generic;
 
 namespace ClassPropertyValidator.Tests.Fakes.StructureA
 {
-    public class FakeCustomer
+    public class FakeCustomerWithDifferentPropertyName
     {
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTime Created { get; set; }
 
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? Updated { get; set; }
 
-        public FakeEnum FakeEnum { get; set; }
+        public FakeEnum Enum { get; set; }
 
         public IEnumerable<int> Identifiers { get; set; }
     }

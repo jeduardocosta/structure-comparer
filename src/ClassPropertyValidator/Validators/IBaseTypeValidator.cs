@@ -2,7 +2,7 @@
 
 namespace ClassPropertyValidator.Validators
 {
-    internal interface ITypeBaseValidator
+    internal interface IBaseTypeValidator
     {
         bool Validate(Type baseType, Type toCompareType);
     }

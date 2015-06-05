@@ -40,17 +40,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exception\ClassPropertiesValidationException.cs" />
+    <Compile Include="Extensions\PropertyInfoExtensions.cs" />
     <Compile Include="Models\ClassPropertiesValidationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\ClassPropertyValidator.cs" />
-    <Compile Include="Validators\ComplexTypeBaseValidator.cs" />
-    <Compile Include="Validators\EnumTypeBaseValidator.cs" />
+    <Compile Include="Validators\ComplexTypeValidator.cs" />
+    <Compile Include="Validators\EnumTypeValidator.cs" />
     <Compile Include="Validators\Flows\ValidationFlow.cs" />
     <Compile Include="Validators\Flows\Factories\ValidationFlowFactory.cs" />
-    <Compile Include="Validators\ITypeBaseValidator.cs" />
-    <Compile Include="Validators\PrimitiveTypeBaseValidator.cs" />
+    <Compile Include="Validators\IBaseTypeValidator.cs" />
+    <Compile Include="Validators\PrimitiveTypeValidator.cs" />
     <Compile Include="Validators\PropertyValidator.cs" />
-    <Compile Include="Validators\TypeTypeValidator.cs" />
     <Compile Include="Validators\TypeValidator.cs" />
   </ItemGroup>
   <ItemGroup />

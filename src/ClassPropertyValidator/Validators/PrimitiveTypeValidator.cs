@@ -2,7 +2,7 @@
 
 namespace ClassPropertyValidator.Validators
 {
-    internal class PrimitiveTypeBaseValidator : ITypeBaseValidator
+    internal class PrimitiveTypeValidator : IBaseTypeValidator
     {
         public bool Validate(Type baseType, Type toCompareType)
         {
