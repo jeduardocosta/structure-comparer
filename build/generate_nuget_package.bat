@@ -1,0 +1,1 @@
+..\.nuget\NuGet.exe pack ..\src\ClassPropertyValidator\ClassPropertyValidator.csproj -Prop Configuration=Release

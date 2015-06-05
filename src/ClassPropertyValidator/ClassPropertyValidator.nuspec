@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>jeduardocosta</authors>
+    <owners>jeduardocosta</owners>
+    <licenseUrl>https://raw.githubusercontent.com/lfreneda/FluentDynamoDb/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/lfreneda/FluentDynamoDb</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>
+      First implementations
+    </releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>class property type validation reflection enum complex type primitive</tags>
+  </metadata>
+</package>
