@@ -17,7 +17,7 @@ namespace ClassPropertyValidator.Tests.Validators
         }
 
         [Test]
-        public void Validate_GivenTwoIdentificalEnums_MustReturnTrueToValidationResultUsingEnumTypeValidator()
+        public void Validate_GivenTwoIdentificalEnums_MustReturnTrueToValidationResult()
         {
             var baseType = typeof(FakeEnum);
             var toCompareType = typeof(FakeEnum);
@@ -28,7 +28,7 @@ namespace ClassPropertyValidator.Tests.Validators
         }
 
         [Test]
-        public void Validate_GivenTwoEnumsWithDifferentNames_MustReturnFalseToValidationResultUsingEnumTypeValidator()
+        public void Validate_GivenTwoEnumsWithDifferentNames_MustReturnFalseToValidationResult()
         {
             var baseType = typeof(FakeEnum);
             var toCompareType = typeof(FakeEnumDifferentNames);
@@ -39,7 +39,7 @@ namespace ClassPropertyValidator.Tests.Validators
         }
 
         [Test]
-        public void Validate_GivenTwoEnumsWithSameNamesButUnordered_MustReturnFalseToValidationResultUsingEnumTypeValidator()
+        public void Validate_GivenTwoEnumsWithSameNamesButUnordered_MustReturnFalseToValidationResult()
         {
             var baseType = typeof(FakeEnum);
             var toCompareType = typeof(FakeEnumUnorderedNames);
@@ -50,10 +50,21 @@ namespace ClassPropertyValidator.Tests.Validators
         }
 
         [Test]
-        public void Validate_GivenTwoEnumsWithSameNamesButNotIdenticalValues_MustReturnFalseToValidationResultUsingEnumTypeValidator()
+        public void Validate_GivenTwoEnumsWithSameNamesButNotIdenticalValues_MustReturnFalseToValidationResult()
         {
             var baseType = typeof(FakeEnum);
             var toCompareType = typeof(FakeEnumWrongValues);
+
+            var result = _enumTypeValidator.Validate(baseType, toCompareType);
+
+            result.Should().BeFalse();
+        }
+
+        [Test]
+        public void Validate_GivenFakeEnumAndFakeEnumWrongCombination_MustReturnFalseToValidationResult()
+        {
+            var baseType = typeof(FakeEnum);
+            var toCompareType = typeof(FakeEnumWrongCombination);
 
             var result = _enumTypeValidator.Validate(baseType, toCompareType);
 

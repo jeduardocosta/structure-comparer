@@ -66,6 +66,7 @@
     <Compile Include="Extensions\PropertyInfoExtensionsTests.cs" />
     <Compile Include="Fakes\FakeEnum.cs" />
     <Compile Include="Fakes\FakeEnumDifferentNames.cs" />
+    <Compile Include="Fakes\FakeEnumWrongCombination.cs" />
     <Compile Include="Fakes\FakeEnumWrongValues.cs" />
     <Compile Include="Fakes\FakeEnumUnorderedNames.cs" />
     <Compile Include="Fakes\StructureA\FakeCustomer.cs" />
