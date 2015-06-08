@@ -6,14 +6,14 @@
     <title>$title$</title>
     <authors>jeduardocosta</authors>
     <owners>jeduardocosta</owners>
-    <licenseUrl>https://raw.githubusercontent.com/lfreneda/FluentDynamoDb/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/lfreneda/FluentDynamoDb</projectUrl>
+    <licenseUrl>https://raw.githubusercontent.com/jeduardocosta/class-property-validator/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/jeduardocosta/class-property-validator</projectUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>
       First implementations
     </releaseNotes>
     <copyright>Copyright 2015</copyright>
-    <tags>class property type validation reflection enum complex type primitive</tags>
+    <tags>class property validation type reflection enum complex type primitive</tags>
   </metadata>
 </package>
