@@ -62,7 +62,6 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Exception\ClassPropertiesValidationExceptionTests.cs" />
     <Compile Include="Extensions\PropertyInfoExtensionsTests.cs" />
     <Compile Include="Fakes\FakeEnum.cs" />
     <Compile Include="Fakes\FakeEnumDifferentNames.cs" />

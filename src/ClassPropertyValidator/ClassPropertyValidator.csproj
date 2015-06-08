@@ -39,7 +39,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exception\ClassPropertiesValidationException.cs" />
     <Compile Include="Extensions\PropertyInfoExtensions.cs" />
     <Compile Include="Models\ClassPropertyValidationResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
