@@ -1,1 +1,1 @@
-C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild ..\src\ClassPropertyValidator\ClassPropertyValidator.csproj /p:Configuration=Release
+C:\Windows\Microsoft.NET\Framework\v4.0.30319\msbuild ..\src\TypeValidator\TypeValidator.csproj /p:Configuration=Release
