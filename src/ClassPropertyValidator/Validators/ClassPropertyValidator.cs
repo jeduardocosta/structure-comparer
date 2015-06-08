@@ -62,7 +62,7 @@ namespace ClassPropertyValidator.Validators
                 else
                 {
                     if (!IsValidByValidationFlow(baseTypeProperty, toCompareTypeProperties))
-                        _validationResult.AddError(baseType, toCompareType);
+                        _validationResult.AddError(baseType, toCompareType, baseTypeProperty);
                 }
             }
 

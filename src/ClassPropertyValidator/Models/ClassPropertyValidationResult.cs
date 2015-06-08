@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace ClassPropertyValidator.Models
 {
@@ -42,6 +43,12 @@ namespace ClassPropertyValidator.Models
                 unsuccessfulResultMessage += ". Reason: " + additionalErrorMessage;
 
             _errors.Add(unsuccessfulResultMessage);
+        }
+
+        internal void AddError(Type baseType, Type toCompareType, PropertyInfo property)
+        {
+            var additionalErrorMessage = string.Format("divergent property: {0}", property.Name);
+            AddError(baseType, toCompareType, additionalErrorMessage);
         }
 
         private bool HasErrors()
