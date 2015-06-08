@@ -1,2 +1,2 @@
-# class-property-validator
-Validation properties (types and their names, enums) from class
+# type-validator
+Validation types (primitive, complex and enums)
