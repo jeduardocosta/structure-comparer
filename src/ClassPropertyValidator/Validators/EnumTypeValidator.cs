@@ -8,7 +8,15 @@ namespace ClassPropertyValidator.Validators
     {
         private readonly IEnumerable<Func<Type, Type, bool>> _validations;
 
+        private readonly ITypeValidator _typeValidator;
+
+        internal EnumTypeValidator(ITypeValidator typeValidator)
+        {
+            _typeValidator = typeValidator;
+        }
+
         public EnumTypeValidator()
+            : this(new TypeValidator())
         {
             _validations = new List<Func<Type, Type, bool>>
             {
@@ -18,6 +26,12 @@ namespace ClassPropertyValidator.Validators
 
         public bool Validate(Type baseType, Type toCompareType)
         {
+            if (_typeValidator.IsNullable(baseType) && _typeValidator.IsNullable(toCompareType))
+            {
+                baseType = GetEnumTypeFromNullableType(baseType);
+                toCompareType = GetEnumTypeFromNullableType(toCompareType);
+            }
+
             return _validations
                 .ToList()
                 .All(validation => validation(baseType, toCompareType));
@@ -47,6 +61,11 @@ namespace ClassPropertyValidator.Validators
         private static IEnumerable<int> GetValues(Type type)
         {
             return Enum.GetValues(type) as IEnumerable<int> ?? new List<int>();
+        }
+
+        private static Type GetEnumTypeFromNullableType(Type @type)
+        {
+            return Nullable.GetUnderlyingType(type);
         }
     }
 }

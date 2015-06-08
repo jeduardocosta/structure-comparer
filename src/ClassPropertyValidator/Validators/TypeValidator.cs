@@ -10,6 +10,7 @@ namespace ClassPropertyValidator.Validators
         bool IsEnum(Type type);
         bool IsComplexType(Type type);
         bool IsEnumerableType(Type type);
+        bool IsNullable(Type type);
 
         bool ValidateName(Type baseType, Type toCompareType);
         bool ValidatePropertiesNumber(Type baseType, Type toCompareType);
@@ -42,8 +43,25 @@ namespace ClassPropertyValidator.Validators
 
         public bool ValidateName(Type baseType, Type toCompareType)
         {
-            var baseTypeName = baseType.Name;
-            var toCompareTypeName = toCompareType.Name;
+            string baseTypeName;
+            string toCompareTypeName;
+
+            if (IsNullable(baseType) && IsNullable(toCompareType))
+            {
+                baseType = GetTypeFromNullableType(baseType);
+                toCompareType = GetTypeFromNullableType(toCompareType);
+            }
+
+            if (IsEnumerableType(baseType) && IsEnumerableType(toCompareType))
+            {
+                baseTypeName = baseType.GenericTypeArguments.Select(c => c.Name).FirstOrDefault();
+                toCompareTypeName = toCompareType.GenericTypeArguments.Select(c => c.Name).FirstOrDefault();
+            }
+            else
+            {
+                baseTypeName = baseType.Name;
+                toCompareTypeName = toCompareType.Name;
+            }
 
             return baseTypeName == toCompareTypeName;
         }
@@ -81,14 +99,19 @@ namespace ClassPropertyValidator.Validators
             return (type.GetInterface("IEnumerable") != null) && !IsString(type);
         }
 
+        public bool IsNullable(Type type)
+        {
+            return Nullable.GetUnderlyingType(type) != null;
+        }
+
         private static bool IsString(Type type)
         {
             return type == typeof(string) || type == typeof(String);
         }
 
-        private static bool IsNullable(Type type)
+        private static Type GetTypeFromNullableType(Type type)
         {
-            return Nullable.GetUnderlyingType(type) != null;
+            return Nullable.GetUnderlyingType(type);
         }
     }
 }

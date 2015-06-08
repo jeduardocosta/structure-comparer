@@ -70,5 +70,16 @@ namespace ClassPropertyValidator.Tests.Validators
 
             result.Should().BeFalse();
         }
+
+        [Test]
+        public void Validate_GivenTwoEqualsNullableEnum_MustReturnTrueToValidationResult()
+        {
+            var baseType = typeof(FakeEnum?);
+            var toCompareType = typeof(FakeEnum?);
+
+            var result = _enumTypeValidator.Validate(baseType, toCompareType);
+
+            result.Should().BeTrue();
+        }
     }
 }

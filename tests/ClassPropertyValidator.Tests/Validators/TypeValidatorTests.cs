@@ -42,6 +42,17 @@ namespace ClassPropertyValidator.Tests.Validators
         }
 
         [Test]
+        public void ValidateName_GivenAListOfIntegerAndIEnumerableOfInteger_ShouldReturnTrueToValidationResult()
+        {
+            var baseType = typeof(List<int>);
+            var toCompareType = typeof(IEnumerable<int>);
+
+            var result = _typeValidator.ValidateName(baseType, toCompareType);
+
+            result.Should().BeTrue();
+        }
+
+        [Test]
         public void ValidatePropertiesNumber_GivenTwoTypesWithSameNumberOfProperties_ShouldReturnTrueToValidationResult()
         {
             var baseType = typeof(FakeCustomer);
@@ -200,6 +211,26 @@ namespace ClassPropertyValidator.Tests.Validators
         public void IsEnumerableType_GivenAInvalid_MustReturnFalseToValidationResult(Type type)
         {
             var result = _typeValidator.IsEnumerableType(type);
+
+            result.Should().BeFalse();
+        }
+
+        [TestCase(typeof(FakeEnum?))]
+        [TestCase(typeof(int?))]
+        [TestCase(typeof(DateTime?))]
+        public void IsNullable_GivenANullableType_MustReturnTrueToValidationResult(Type type)
+        {
+            var result = _typeValidator.IsNullable(type);
+
+            result.Should().BeTrue();
+        }
+
+        [TestCase(typeof(FakeEnum))]
+        [TestCase(typeof(int))]
+        [TestCase(typeof(string))]
+        public void IsNullable_GivenANonNullableType_MustReturnFalseToValidationResult(Type type)
+        {
+            var result = _typeValidator.IsNullable(type);
 
             result.Should().BeFalse();
         }

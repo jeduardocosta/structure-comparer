@@ -4,13 +4,14 @@ using ClassPropertyValidator.Validators.Flows;
 using ClassPropertyValidator.Validators.Flows.Factories;
 using NUnit.Framework;
 using FluentAssertions;
+using ClassPropertyValidator.Validators;
 
 namespace ClassPropertyValidator.Tests.Validators.Flows.Factories
 {
     [TestFixture]
     public class ValidationFlowFactoryTests
     {
-        private IValidationFlowFactory _validationFlowFactory;
+        private ValidationFlowFactory _validationFlowFactory;
 
         [SetUp]
         public void SetUp()
@@ -37,12 +38,48 @@ namespace ClassPropertyValidator.Tests.Validators.Flows.Factories
         }
 
         [Test]
-        public void Create_GivenAComplexType_ShouldReturnAValidationFlowInstance()
+        public void GetBaseTypeValidator_GivenAComplexType_ShouldReturnComplexTypeValidatorInstance()
         {
             var type = typeof(FakeCustomer);
-            var validationFlow = _validationFlowFactory.Create(type);
+            var baseTypeValidator = _validationFlowFactory.GetBaseTypeValidator(type);
 
-            validationFlow.Should().BeOfType<ValidationFlow>();
+            baseTypeValidator.Should().BeOfType<ComplexTypeValidator>();
+        }
+
+        [Test]
+        public void GetBaseTypeValidator_GivenAPrimitiveType_ShouldReturnPrimitiveTypeValidatorrInstance()
+        {
+            var type = typeof(int);
+            var baseTypeValidator = _validationFlowFactory.GetBaseTypeValidator(type);
+
+            baseTypeValidator.Should().BeOfType<PrimitiveTypeValidator>();
+        }
+
+        [Test]
+        public void GetBaseTypeValidator_GivenANullableEnumType_ShouldReturnPrimitiveTypeValidatorInstance()
+        {
+            var type = typeof(int?);
+            var baseTypeValidator = _validationFlowFactory.GetBaseTypeValidator(type);
+
+            baseTypeValidator.Should().BeOfType<PrimitiveTypeValidator>();
+        }
+
+        [Test]
+        public void GetBaseTypeValidator_GivenAEnumType_ShouldReturnEnumTypeValidatorInstance()
+        {
+            var type = typeof(FakeEnum);
+            var baseTypeValidator = _validationFlowFactory.GetBaseTypeValidator(type);
+
+            baseTypeValidator.Should().BeOfType<EnumTypeValidator>();
+        }
+
+        [Test]
+        public void GetBaseTypeValidator_GivenANullableEnumType_ShouldReturnEnumTypeValidatorInstance()
+        {
+            var type = typeof(FakeEnum?);
+            var baseTypeValidator = _validationFlowFactory.GetBaseTypeValidator(type);
+
+            baseTypeValidator.Should().BeOfType<EnumTypeValidator>();
         }
     }
 }
