@@ -3,7 +3,7 @@ using TypeValidator.Validators;
 
 namespace TypeValidator.Extensions
 {
-    public static class NullableExtensions
+    public static class TypeExtensions
     {
         private static readonly ITypeValidator TypeValidator = new Validators.TypeValidator();
 

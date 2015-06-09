@@ -7,7 +7,7 @@ using TypeValidator.Tests.Fakes;
 namespace TypeValidator.Tests.Extensions
 {
     [TestFixture]
-    public class NullableExtensionsTests
+    public class TypeExtensionsTests
     {
         [TestCase(typeof(int?), typeof(int))]
         [TestCase(typeof(DateTime?), typeof(DateTime))]
