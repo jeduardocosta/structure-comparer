@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("StructureComparer")]
-[assembly: AssemblyDescription("Structure comparison (primitive, complex and enums)")]
+[assembly: AssemblyDescription("Structure comparison (primitive and complex type, enums)")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("StructureComparer")]
