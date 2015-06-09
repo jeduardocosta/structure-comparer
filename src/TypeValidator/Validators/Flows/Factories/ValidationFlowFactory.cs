@@ -1,4 +1,5 @@
 ﻿using System;
+using TypeValidator.Extensions;
 
 namespace TypeValidator.Validators.Flows.Factories
 {
@@ -37,7 +38,7 @@ namespace TypeValidator.Validators.Flows.Factories
         public IBaseTypeValidator GetBaseTypeValidator(Type type)
         {
             if (_typeValidator.IsNullable(type))
-                type = GetTypeFromNullableType(type);
+                type = type.GetBaseTypeFromTypeNullable();
 
             if (_typeValidator.IsEnum(type))
                 return new EnumTypeValidator();
@@ -46,11 +47,6 @@ namespace TypeValidator.Validators.Flows.Factories
                 return new PrimitiveTypeValidator();
 
             return new ComplexTypeValidator();
-        }
-
-        private static Type GetTypeFromNullableType(Type type)
-        {
-            return Nullable.GetUnderlyingType(type);
         }
     }
 }

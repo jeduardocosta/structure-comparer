@@ -62,6 +62,7 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Extensions\NullableExtensionsTests.cs" />
     <Compile Include="Extensions\PropertyInfoExtensionsTests.cs" />
     <Compile Include="Fakes\FakeEnum.cs" />
     <Compile Include="Fakes\FakeEnumDifferentNames.cs" />

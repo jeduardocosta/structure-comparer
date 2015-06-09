@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using TypeValidator.Extensions;
 
 namespace TypeValidator.Validators
 {
@@ -45,12 +46,9 @@ namespace TypeValidator.Validators
         {
             string baseTypeName;
             string toCompareTypeName;
-
-            if (IsNullable(baseType) && IsNullable(toCompareType))
-            {
-                baseType = GetTypeFromNullableType(baseType);
-                toCompareType = GetTypeFromNullableType(toCompareType);
-            }
+            
+            baseType = GetCurrentTypeOrBaseTypeFromNullableType(baseType);
+            toCompareType = GetCurrentTypeOrBaseTypeFromNullableType(toCompareType);
 
             if (IsEnumerableType(baseType) && IsEnumerableType(toCompareType))
             {
@@ -109,9 +107,12 @@ namespace TypeValidator.Validators
             return type == typeof(string) || type == typeof(String);
         }
 
-        private static Type GetTypeFromNullableType(Type type)
+        private Type GetCurrentTypeOrBaseTypeFromNullableType(Type type)
         {
-            return Nullable.GetUnderlyingType(type);
+            if (IsNullable(type))
+                return type.GetBaseTypeFromTypeNullable();
+
+            return type;
         }
     }
 }
