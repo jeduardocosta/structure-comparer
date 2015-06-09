@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>jeduardocosta</authors>
+    <owners>jeduardocosta</owners>
+    <licenseUrl>https://raw.githubusercontent.com/jeduardocosta/structure-comparer/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/jeduardocosta/structure-comparer</projectUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>
+      First implementations
+    </releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>structure comparison type reflection enum complex type primitive</tags>
+  </metadata>
+</package>
