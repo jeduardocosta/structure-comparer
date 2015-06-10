@@ -27,7 +27,7 @@ namespace StructureComparer.Tests.Validators
 
             var result = _typeValidator.ValidateName(baseType, toCompareType);
 
-            result.Should().BeTrue();
+            result.AreEqual.Should().BeTrue(result.DifferencesString);
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace StructureComparer.Tests.Validators
 
             var result = _typeValidator.ValidateName(baseType, toCompareType);
 
-            result.Should().BeFalse();
+            result.AreEqual.Should().BeFalse(result.DifferencesString);
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace StructureComparer.Tests.Validators
 
             var result = _typeValidator.ValidateName(baseType, toCompareType);
 
-            result.Should().BeTrue();
+            result.AreEqual.Should().BeTrue(result.DifferencesString);
         }
 
         [Test]

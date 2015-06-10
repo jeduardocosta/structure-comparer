@@ -49,7 +49,7 @@ namespace StructureComparer
                 return CreateResultByEnumValidation(baseType, toCompareType);
 
             if (!_typeValidator.ValidatePropertiesNumber(baseType, toCompareType))
-                return CreateNumberOfPropertiesUnsuccessfulResult(baseType, toCompareType);
+                _comparisonResult.AddError(CreateNumberOfPropertiesUnsuccessfulResult(baseType, toCompareType).DifferencesString);
 
             var baseTypeProperties = baseType.GetProperties();
             var toCompareTypeProperties = toCompareType.GetProperties();
@@ -63,12 +63,13 @@ namespace StructureComparer
                 }
                 else
                 {
-                    if (!IsValidByValidationFlow(baseTypeProperty, toCompareTypeProperties))
-                        _comparisonResult.AddError(baseType, toCompareType, baseTypeProperty);
+                    var comparisonResultFromTypeValidaton = ValidateByValidationFlow(baseTypeProperty, toCompareTypeProperties);
+                    if (!comparisonResultFromTypeValidaton.AreEqual)
+                        _comparisonResult.AddError(comparisonResultFromTypeValidaton.DifferencesString);
                 }
             }
 
-            return _comparisonResult.GetResult();
+            return _comparisonResult;
         }
 
         public StructureComparisonResult Compare<T1, T2>()
@@ -78,32 +79,28 @@ namespace StructureComparer
             return Compare(type1, type2);
         }
 
-        private bool IsValidByValidationFlow(PropertyInfo baseTypeProperty, IEnumerable<PropertyInfo> toCompareTypeProperties)
+        private StructureComparisonResult ValidateByValidationFlow(PropertyInfo baseTypeProperty, IEnumerable<PropertyInfo> toCompareTypeProperties)
         {
             var toCompareTypeProperty = toCompareTypeProperties.GetByName(baseTypeProperty.Name);
-
-            if (toCompareTypeProperty == null)
-                return false;
-
             var validationFlow = _validationFlowFactory.Create(baseTypeProperty.PropertyType);
-            return validationFlow.Validate(baseTypeProperty.PropertyType, toCompareTypeProperty.PropertyType);
+            return validationFlow.Validate(baseTypeProperty.PropertyType, toCompareTypeProperty.PropertyType, baseTypeProperty.Name);
         }
 
         private StructureComparisonResult CreateResultByEnumValidation(Type baseType, Type toCompareType)
         {
-            var isValid = _enumTypeValidator.Validate(baseType, toCompareType);
+            var comparisonResult = _enumTypeValidator.Validate(baseType, toCompareType);
 
-            if (!isValid)
-                _comparisonResult.AddError(baseType, toCompareType);
+            if (!comparisonResult.AreEqual)
+                _comparisonResult.AddError(comparisonResult.DifferencesString);
 
-            return _comparisonResult.GetResult();
+            return _comparisonResult;
         }
 
         private StructureComparisonResult CreateNumberOfPropertiesUnsuccessfulResult(Type baseType, Type toCompareType)
         {
             const string errorMessage = "number of properties are different";
             _comparisonResult.AddError(baseType, toCompareType, errorMessage);
-            return _comparisonResult.GetResult();
+            return _comparisonResult;
         }
 
         private static string CreateDistinctPropertyNamesErrorMessage(PropertyInfo baseTypeProperty, Type toCompareType)

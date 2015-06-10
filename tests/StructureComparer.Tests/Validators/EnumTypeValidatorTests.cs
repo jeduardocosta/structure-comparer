@@ -24,7 +24,7 @@ namespace StructureComparer.Tests.Validators
 
             var result = _enumTypeValidator.Validate(baseType, toCompareType);
 
-            result.Should().BeTrue();
+            result.AreEqual.Should().BeTrue(result.DifferencesString);
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace StructureComparer.Tests.Validators
 
             var result = _enumTypeValidator.Validate(baseType, toCompareType);
 
-            result.Should().BeFalse();
+            result.AreEqual.Should().BeFalse(result.DifferencesString);
         }
 
         [Test]
@@ -46,7 +46,7 @@ namespace StructureComparer.Tests.Validators
 
             var result = _enumTypeValidator.Validate(baseType, toCompareType);
 
-            result.Should().BeFalse();
+            result.AreEqual.Should().BeFalse(result.DifferencesString);
         }
 
         [Test]
@@ -57,7 +57,7 @@ namespace StructureComparer.Tests.Validators
 
             var result = _enumTypeValidator.Validate(baseType, toCompareType);
 
-            result.Should().BeFalse();
+            result.AreEqual.Should().BeFalse(result.DifferencesString);
         }
 
         [Test]
@@ -68,7 +68,7 @@ namespace StructureComparer.Tests.Validators
 
             var result = _enumTypeValidator.Validate(baseType, toCompareType);
 
-            result.Should().BeFalse();
+            result.AreEqual.Should().BeFalse(result.DifferencesString);
         }
 
         [Test]
@@ -79,7 +79,7 @@ namespace StructureComparer.Tests.Validators
 
             var result = _enumTypeValidator.Validate(baseType, toCompareType);
 
-            result.Should().BeTrue();
+            result.AreEqual.Should().BeTrue(result.DifferencesString);
         }
     }
 }

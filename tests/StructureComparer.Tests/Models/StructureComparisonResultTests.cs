@@ -39,7 +39,7 @@ namespace StructureComparer.Tests.Models
         {
             _comparisonResult.AddError(_fakeCustomerType, _fakeCustomerType, "error");
 
-            var result = _comparisonResult.GetResult();
+            var result = _comparisonResult;
 
             result.AreEqual.Should().BeFalse();
         }
@@ -47,7 +47,7 @@ namespace StructureComparer.Tests.Models
         [Test]
         public void GetResult_GivenAClassPropertyValidationResultObjectWithoutErrors_ShouldReturnFalseToAreaEqualProperty()
         {
-            var result = _comparisonResult.GetResult();
+            var result = _comparisonResult;
 
             result.AreEqual.Should().BeTrue();
         }
@@ -59,7 +59,7 @@ namespace StructureComparer.Tests.Models
 
             _comparisonResult.AddError(_fakeCustomerType, _fakeOrderType, "error");
 
-            var result = _comparisonResult.GetResult();
+            var result = _comparisonResult;
 
             result.DifferencesString.Should().Be(expected);
         }
@@ -75,7 +75,7 @@ namespace StructureComparer.Tests.Models
             _comparisonResult.AddError(_fakeCustomerType, _fakeOrderType, "error 1");
             _comparisonResult.AddError(_fakeOrderType, _fakeCustomerType, "error 2");
 
-            var result = _comparisonResult.GetResult();
+            var result = _comparisonResult;
 
             result.DifferencesString.Should().Be(expected);
         }

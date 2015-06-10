@@ -12,21 +12,16 @@ namespace StructureComparer.Models
             get { return !HasErrors(); } 
         }
 
-        public string DifferencesString { get; private set; }
+        public string DifferencesString 
+        {
+            get { return GenerateDifferencesString(); }
+        }
 
         private readonly IList<string> _errors;
 
         public StructureComparisonResult()
         {
             _errors = new List<string>();
-        }
-
-        internal StructureComparisonResult GetResult()
-        {
-            if (HasErrors())
-                DifferencesString = GenerateDifferencesString();
-
-            return this;
         }
 
         internal void AddError(string errorMessage)
@@ -58,7 +53,10 @@ namespace StructureComparer.Models
 
         private string GenerateDifferencesString()
         {
-            return string.Join(Environment.NewLine, _errors);
+            if (_errors.Any())
+                return string.Join(Environment.NewLine, _errors);
+
+            return string.Empty;
         }
     }
 }

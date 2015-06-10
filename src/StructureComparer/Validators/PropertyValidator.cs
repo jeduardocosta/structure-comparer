@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
+using StructureComparer.Extensions;
 
 namespace StructureComparer.Validators
 {
@@ -20,7 +20,7 @@ namespace StructureComparer.Validators
         public bool ValidateNameExistance(PropertyInfo baseProperty, IEnumerable<PropertyInfo> toCompareTypeProperties)
         {
             var baseTypePropertyName = baseProperty.Name;
-            var toCompareTypeProperty = toCompareTypeProperties.FirstOrDefault(c => c.Name == baseTypePropertyName);
+            var toCompareTypeProperty = toCompareTypeProperties.GetByName(baseTypePropertyName);
             return toCompareTypeProperty != null;
         }
     }

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using StructureComparer.Extensions;
+using StructureComparer.Models;
 
 namespace StructureComparer.Validators.Flows
 {
     internal interface IValidationFlow
     {
-        bool Validate(Type baseType, Type toCompareType);
+        StructureComparisonResult Validate(Type baseType, Type toCompareType, string propertyName);
     }
 
     internal class ValidationFlow : IValidationFlow
@@ -14,7 +15,7 @@ namespace StructureComparer.Validators.Flows
         private readonly ITypeValidator _typeValidator;
         private readonly IBaseTypeValidator _baseTypeValidator;
 
-        private IEnumerable<Func<Type, Type, bool>> _validations;
+        private IEnumerable<Func<Type, Type, StructureComparisonResult>> _validations;
 
         public ValidationFlow(ITypeValidator typeValidator, IBaseTypeValidator baseTypeValidator)
         {
@@ -22,17 +23,25 @@ namespace StructureComparer.Validators.Flows
             _baseTypeValidator = baseTypeValidator;
         }
 
-        public bool Validate(Type baseType, Type toCompareType)
+        public StructureComparisonResult Validate(Type baseType, Type toCompareType, string propertyName)
         {
-            _validations = new List<Func<Type, Type, bool>>
+            _validations = new List<Func<Type, Type, StructureComparisonResult>>
             {
                 _typeValidator.ValidateName,
                 _baseTypeValidator.Validate
             };
 
-            return _validations
-                .ToList()
-                .All(validation => validation(baseType, toCompareType));
+            var comparisonResult = new StructureComparisonResult();
+
+            foreach (var validation in _validations)
+            {
+                var validatonResult = validation(baseType, toCompareType);
+
+                if (!validatonResult.AreEqual)
+                    comparisonResult.AddError(validatonResult.DifferencesString.AppendPropertyName(propertyName));
+            }
+
+            return comparisonResult;
         }
     }
 }

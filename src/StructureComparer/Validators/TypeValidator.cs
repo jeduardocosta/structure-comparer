@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using StructureComparer.Extensions;
+using StructureComparer.Models;
 
 namespace StructureComparer.Validators
 {
@@ -13,7 +14,7 @@ namespace StructureComparer.Validators
         bool IsEnumerableType(Type type);
         bool IsNullable(Type type);
 
-        bool ValidateName(Type baseType, Type toCompareType);
+        StructureComparisonResult ValidateName(Type baseType, Type toCompareType);
         bool ValidatePropertiesNumber(Type baseType, Type toCompareType);
         bool ValidateSameType(Type baseType, Type toCompareType);
     }
@@ -42,8 +43,10 @@ namespace StructureComparer.Validators
             typeof (TimeSpan)
         };
 
-        public bool ValidateName(Type baseType, Type toCompareType)
+        public StructureComparisonResult ValidateName(Type baseType, Type toCompareType)
         {
+            var comparisonResult = new StructureComparisonResult();
+
             string baseTypeName;
             string toCompareTypeName;
             
@@ -61,7 +64,12 @@ namespace StructureComparer.Validators
                 toCompareTypeName = toCompareType.Name;
             }
 
-            return baseTypeName == toCompareTypeName;
+            var areEqual = baseTypeName == toCompareTypeName;
+
+            if (!areEqual)
+                comparisonResult.AddError(baseType, toCompareType);
+
+            return comparisonResult;
         }
 
         public bool ValidatePropertiesNumber(Type baseType, Type toCompareType)

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using StructureComparer.Models;
 
 namespace StructureComparer.Validators
 {
     internal class EnumTypeValidator : IBaseTypeValidator
     {
-        private readonly IEnumerable<Func<Type, Type, bool>> _validations;
+        private readonly IEnumerable<Func<Type, Type, StructureComparisonResult>> _validations;
 
         private readonly ITypeValidator _typeValidator;
 
@@ -18,39 +19,68 @@ namespace StructureComparer.Validators
         public EnumTypeValidator()
             : this(new TypeValidator())
         {
-            _validations = new List<Func<Type, Type, bool>>
+            _validations = new List<Func<Type, Type, StructureComparisonResult>>
             {
                 ValidateNames, ValidateValues
             };
         }
 
-        public bool Validate(Type baseType, Type toCompareType)
+        public StructureComparisonResult Validate(Type baseType, Type toCompareType)
         {
+            var comparisonResult = new StructureComparisonResult();
+
             if (_typeValidator.IsNullable(baseType) && _typeValidator.IsNullable(toCompareType))
             {
                 baseType = GetEnumTypeFromNullableType(baseType);
                 toCompareType = GetEnumTypeFromNullableType(toCompareType);
             }
 
-            return _validations
-                .ToList()
-                .All(validation => validation(baseType, toCompareType));
+
+            foreach (var validation in _validations)
+            {
+                var validatonResult = validation(baseType, toCompareType);
+
+                if (!validatonResult.AreEqual)
+                    comparisonResult.AddError(validatonResult.DifferencesString);
+            }
+
+            return comparisonResult;
         }
 
-        private bool ValidateNames(Type baseType, Type toCompareType)
+        private StructureComparisonResult ValidateNames(Type baseType, Type toCompareType)
         {
+            var comparisonResult = new StructureComparisonResult();
+
             var baseTypeNames = GetNames(baseType);
             var toCompareTypeNames = GetNames(toCompareType);
 
-            return baseTypeNames.SequenceEqual(toCompareTypeNames);
+            var areEqual = baseTypeNames.SequenceEqual(toCompareTypeNames);
+
+            if (!areEqual)
+            {
+                comparisonResult.AddError(string.Format("Failed to validate structures. Type 1: '{0}', Type 2: '{1}'. Reason: divergent enum names",
+                                                          baseType.Name, toCompareType.Name));
+            }
+
+            return comparisonResult;
         }
 
-        private bool ValidateValues(Type baseType, Type toCompareType)
+        private StructureComparisonResult ValidateValues(Type baseType, Type toCompareType)
         {
+            var comparisonResult = new StructureComparisonResult();
+
             var baseTypeValues = GetValues(baseType).ToList();
             var toCompareTypeValues = GetValues(toCompareType).ToList();
 
-            return baseTypeValues.SequenceEqual(toCompareTypeValues);
+            var areEqual = baseTypeValues.SequenceEqual(toCompareTypeValues);
+
+            if (!areEqual)
+            {
+                comparisonResult.AddError(string.Format("failed to validate structures. Type 1: '{0}', Type 2: '{1}'. Reason: divergent enum values",
+                                                          baseType.Name, toCompareType.Name));
+            }
+
+            return comparisonResult;
         }
 
         private static IEnumerable<string> GetNames(Type type)

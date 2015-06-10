@@ -47,7 +47,7 @@ namespace StructureComparer.Tests.Validators
         {
             var result = _primitiveTypeValidator.Validate(baseType, toCompareType);
 
-            result.Should().BeTrue();
+            result.AreEqual.Should().BeTrue(result.DifferencesString);
         }
 
         [TestCase(typeof(int?), typeof(int?))]
@@ -79,7 +79,7 @@ namespace StructureComparer.Tests.Validators
         {
             var result = _primitiveTypeValidator.Validate(baseType, toCompareType);
 
-            result.Should().BeTrue();
+            result.AreEqual.Should().BeTrue(result.DifferencesString);
         }
     }
 }

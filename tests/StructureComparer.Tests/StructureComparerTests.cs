@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System;
+using FluentAssertions;
 using NUnit.Framework;
 using StructureComparer.Tests.Fakes;
 using StructureComparer.Tests.Fakes.StructureA;
@@ -32,10 +33,7 @@ namespace StructureComparer.Tests
         [Test]
         public void Compare_GivenTwoDifferentEnums_ShouldNotValidate()
         {
-            var fakeEnumA = typeof(FakeEnum);
-            var fakeEnumB = typeof(FakeEnumWrongValues);
-
-            var result = _comparer.Compare(fakeEnumA, fakeEnumB);
+            var result = _comparer.Compare<FakeEnum, FakeEnumWrongValues>();
 
             result.AreEqual.Should().BeFalse();
         }
@@ -43,10 +41,7 @@ namespace StructureComparer.Tests
         [Test]
         public void Compare_GivenTwoTypesWithDifferentPropertyNumbers_ShouldNotValidate()
         {
-            var fakeOrder = typeof(FakeOrder);
-            var fakeCustomer = typeof(FakeCustomer);
-
-            var result = _comparer.Compare(fakeOrder, fakeCustomer);
+            var result = _comparer.Compare<FakeOrder, FakeCustomer>();
 
             result.AreEqual.Should().BeFalse();
         }
@@ -54,10 +49,7 @@ namespace StructureComparer.Tests
         [Test]
         public void Compare_GivenTwoTypesWithDifferentPropertyNames_ShouldNotValidate()
         {
-            var fakeCustomer = typeof(FakeCustomer);
-            var fakeCustomerWithDifferentPropertyName = typeof(FakeCustomerWithDifferentPropertyName);
-
-            var result = _comparer.Compare(fakeCustomer, fakeCustomerWithDifferentPropertyName);
+            var result = _comparer.Compare<FakeCustomer, FakeCustomerWithDifferentPropertyName>();
 
             result.AreEqual.Should().BeFalse();
         }
@@ -95,6 +87,19 @@ namespace StructureComparer.Tests
             var result = _comparer.Compare<StructureA.FakeCustomer, StructureB.FakeCustomer>();
 
             result.AreEqual.Should().BeTrue();
+        }
+
+        [Test]
+        public void Compare_GivenStructureAFakeClass1AndStructureBFakeClass2_ShouldReturnDifferencesChain()
+        {
+            var expected = "Failed to validate structures. Type 1: 'Int32', Type 2: 'Int16'. Property name: 'Id'" + Environment.NewLine +
+                           "Failed to validate structures. Type 1: 'FakeEnum', Type 2: 'FakeEnumDifferentNames'. Property name: 'Enum'" + Environment.NewLine +
+                           "Failed to validate structures. Type 1: 'FakeEnum', Type 2: 'FakeEnumDifferentNames'. Reason: divergent enum names. Property name: 'Enum' from 'FakeClass3' from 'FakeClass2'" + Environment.NewLine +
+                           "Failed to validate structures. Type 1: 'FakeClass1', Type 2: 'FakeClass1'. Reason: property name 'FullName' was not found in type 'FakeClass1'";
+
+            var result = _comparer.Compare<StructureA.FakeClass1, StructureB.FakeClass1>();
+
+            result.DifferencesString.Should().Be(expected);
         }
     }
 }
