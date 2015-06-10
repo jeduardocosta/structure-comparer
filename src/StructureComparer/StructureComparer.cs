@@ -11,6 +11,7 @@ namespace StructureComparer
     public interface IStructureComparer
     {
         StructureComparisonResult Compare(Type baseType, Type toCompareType);
+        StructureComparisonResult Compare<T1, T2>();
     }
 
     public class StructureComparer : IStructureComparer
@@ -68,6 +69,13 @@ namespace StructureComparer
             }
 
             return _comparisonResult.GetResult();
+        }
+
+        public StructureComparisonResult Compare<T1, T2>()
+        {
+            var type1 = typeof(T1);
+            var type2 = typeof(T2);
+            return Compare(type1, type2);
         }
 
         private bool IsValidByValidationFlow(PropertyInfo baseTypeProperty, IEnumerable<PropertyInfo> toCompareTypeProperties)

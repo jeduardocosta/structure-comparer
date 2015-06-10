@@ -55,7 +55,7 @@ namespace StructureComparer.Tests.Models
         [Test]
         public void GetResult_GivenAClassPropertyValidationResultObjectWithError_ShouldReturnExpectedDifferencesString()
         {
-            const string expected = "Failed to validate types. Type 1: 'FakeCustomer', Type 2: 'FakeOrder'. Reason: error";
+            const string expected = "Failed to validate structures. Type 1: 'FakeCustomer', Type 2: 'FakeOrder'. Reason: error";
 
             _comparisonResult.AddError(_fakeCustomerType, _fakeOrderType, "error");
 
@@ -68,8 +68,8 @@ namespace StructureComparer.Tests.Models
         public void GetResult_AddTwoErrorsToValidationResultObject_ShouldReturnExpectedDifferencesString()
         {
             var expected = string.Format(
-                "Failed to validate types. Type 1: 'FakeCustomer', Type 2: 'FakeOrder'. Reason: error 1{0}" +
-                "Failed to validate types. Type 1: 'FakeOrder', Type 2: 'FakeCustomer'. Reason: error 2", 
+                "Failed to validate structures. Type 1: 'FakeCustomer', Type 2: 'FakeOrder'. Reason: error 1{0}" +
+                "Failed to validate structures. Type 1: 'FakeOrder', Type 2: 'FakeCustomer'. Reason: error 2", 
                 Environment.NewLine);
 
             _comparisonResult.AddError(_fakeCustomerType, _fakeOrderType, "error 1");

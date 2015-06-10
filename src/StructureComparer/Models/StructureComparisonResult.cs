@@ -36,7 +36,7 @@ namespace StructureComparer.Models
 
         internal void AddError(Type baseType, Type toCompareType, string additionalErrorMessage = null)
         {
-            var unsuccessfulResultMessage = string.Format("Failed to validate types. Type 1: '{0}', Type 2: '{1}'",
+            var unsuccessfulResultMessage = string.Format("Failed to validate structures. Type 1: '{0}', Type 2: '{1}'",
                                                           baseType.Name, toCompareType.Name);
 
             if (!string.IsNullOrWhiteSpace(additionalErrorMessage))

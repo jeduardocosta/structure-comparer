@@ -2,6 +2,8 @@
 using NUnit.Framework;
 using StructureComparer.Tests.Fakes;
 using StructureComparer.Tests.Fakes.StructureA;
+using StructureA = StructureComparer.Tests.Fakes.StructureA;
+using StructureB = StructureComparer.Tests.Fakes.StructureB;
 
 namespace StructureComparer.Tests
 {
@@ -17,7 +19,7 @@ namespace StructureComparer.Tests
         }
 
         [Test]
-        public void Validate_GivenTwoIdenticalEnums_ShouldValidate()
+        public void Compare_GivenTwoIdenticalEnums_ShouldValidate()
         {
             var fakeEnumA = typeof(FakeEnum);
             var fakeEnumB = typeof(FakeEnum);
@@ -28,7 +30,7 @@ namespace StructureComparer.Tests
         }
 
         [Test]
-        public void Validate_GivenTwoDifferentEnums_ShouldNotValidate()
+        public void Compare_GivenTwoDifferentEnums_ShouldNotValidate()
         {
             var fakeEnumA = typeof(FakeEnum);
             var fakeEnumB = typeof(FakeEnumWrongValues);
@@ -39,7 +41,7 @@ namespace StructureComparer.Tests
         }
 
         [Test]
-        public void Validate_GivenTwoTypesWithDifferentPropertyNumbers_ShouldNotValidate()
+        public void Compare_GivenTwoTypesWithDifferentPropertyNumbers_ShouldNotValidate()
         {
             var fakeOrder = typeof(FakeOrder);
             var fakeCustomer = typeof(FakeCustomer);
@@ -50,7 +52,7 @@ namespace StructureComparer.Tests
         }
 
         [Test]
-        public void Validate_GivenTwoTypesWithDifferentPropertyNames_ShouldNotValidate()
+        public void Compare_GivenTwoTypesWithDifferentPropertyNames_ShouldNotValidate()
         {
             var fakeCustomer = typeof(FakeCustomer);
             var fakeCustomerWithDifferentPropertyName = typeof(FakeCustomerWithDifferentPropertyName);
@@ -61,12 +63,36 @@ namespace StructureComparer.Tests
         }
 
         [Test]
-        public void Validate_GivenTwoFakeCustomerObjectTypes_ShouldValidate()
+        public void Compare_GivenTwoFakeCustomerObjectTypes_ShouldValidate()
         {
             var fakeCustomerA = typeof(FakeCustomer);
             var fakeCustomerB = typeof(FakeCustomer);
 
             var result = _comparer.Compare(fakeCustomerA, fakeCustomerB);
+
+            result.AreEqual.Should().BeTrue();
+        }
+
+        [Test]
+        public void Compare_GivenTwoIntegerObjects_ShouldValidate()
+        {
+            var result = _comparer.Compare<int, int>();
+
+            result.AreEqual.Should().BeTrue();
+        }
+
+        [Test]
+        public void Compare_GivenTwoFakeEnumObjects_ShouldValidate()
+        {
+            var result = _comparer.Compare<FakeEnum, FakeEnum>();
+
+            result.AreEqual.Should().BeTrue();
+        }
+
+        [Test]
+        public void Compare_GivenStructureAFakeCustomerAndStructureBFakeCustomer_ShouldValidate()
+        {
+            var result = _comparer.Compare<StructureA.FakeCustomer, StructureB.FakeCustomer>();
 
             result.AreEqual.Should().BeTrue();
         }

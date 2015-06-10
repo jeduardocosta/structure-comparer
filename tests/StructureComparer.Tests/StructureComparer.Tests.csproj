@@ -69,10 +69,16 @@
     <Compile Include="Fakes\FakeEnumWrongCombination.cs" />
     <Compile Include="Fakes\FakeEnumWrongValues.cs" />
     <Compile Include="Fakes\FakeEnumUnorderedNames.cs" />
+    <Compile Include="Fakes\StructureA\FakeClass1.cs" />
+    <Compile Include="Fakes\StructureA\FakeClass2.cs" />
+    <Compile Include="Fakes\StructureA\FakeClass3.cs" />
     <Compile Include="Fakes\StructureA\FakeCustomer.cs" />
     <Compile Include="Fakes\StructureA\FakeCustomerPropertyWithUpperCase.cs" />
     <Compile Include="Fakes\StructureA\FakeCustomerWithDifferentPropertyName.cs" />
     <Compile Include="Fakes\StructureA\FakeOrder.cs" />
+    <Compile Include="Fakes\StructureB\FakeClass1.cs" />
+    <Compile Include="Fakes\StructureB\FakeClass2.cs" />
+    <Compile Include="Fakes\StructureB\FakeClass3.cs" />
     <Compile Include="Fakes\StructureB\FakeCustomer.cs" />
     <Compile Include="Models\StructureComparisonResultTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
