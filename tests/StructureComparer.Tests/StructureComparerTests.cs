@@ -90,7 +90,7 @@ namespace StructureComparer.Tests
         }
 
         [Test]
-        public void Compare_GivenStructureAFakeClass1AndStructureBFakeClass2_ShouldReturnDifferencesChain()
+        public void Compare_GivenStructureAFakeClass1AndStructureBFakeClass1_ShouldReturnChainDifferences()
         {
             var expected = "Failed to validate structures. Type 1: 'Int32', Type 2: 'Int16'. Property name: 'Id'" + Environment.NewLine +
                            "Failed to validate structures. Type 1: 'FakeEnum', Type 2: 'FakeEnumDifferentNames'. Property name: 'Enum'" + Environment.NewLine +
