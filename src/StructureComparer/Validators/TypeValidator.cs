@@ -16,7 +16,6 @@ namespace StructureComparer.Validators
 
         StructureComparisonResult ValidateName(Type baseType, Type toCompareType);
         bool ValidatePropertiesNumber(Type baseType, Type toCompareType);
-        bool ValidateSameType(Type baseType, Type toCompareType);
     }
 
     internal class TypeValidator : ITypeValidator
@@ -78,11 +77,6 @@ namespace StructureComparer.Validators
             var toCompareTypePropertiesNumber = toCompareType.GetProperties().Count();
 
             return baseTypePropertiesNumber == toCompareTypePropertiesNumber;
-        }
-
-        public bool ValidateSameType(Type baseType, Type toCompareType)
-        {
-            return true;
         }
 
         public bool IsPrimitive(Type type)
