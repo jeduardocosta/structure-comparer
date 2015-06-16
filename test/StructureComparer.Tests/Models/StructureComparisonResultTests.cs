@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Reflection;
 using FluentAssertions;
+using Moq;
 using NUnit.Framework;
 using StructureComparer.Models;
 using StructureComparer.Tests.Fakes.StructureA;
@@ -74,6 +76,25 @@ namespace StructureComparer.Tests.Models
 
             _comparisonResult.AddError(_fakeCustomerType, _fakeOrderType, "error 1");
             _comparisonResult.AddError(_fakeOrderType, _fakeCustomerType, "error 2");
+
+            var result = _comparisonResult;
+
+            result.DifferencesString.Should().Be(expected);
+        }
+
+        [Test]
+        public void GetResult_AddErrorByTwoTypesAndPropertyInfo_ShouldReturnExpectedDifferencesString()
+        {
+            const string propertyInfoName = "identifier";
+            var expected = string.Format("Failed to validate structures. Type 1: 'Int16', Type 2: 'Int32'. Reason: divergent property: {0}", propertyInfoName);
+
+            var baseType = typeof (Int16);
+            var toCompareType = typeof(Int32);
+
+            var propertyInfoMock = new Mock<PropertyInfo>();
+            propertyInfoMock.Setup(c => c.Name).Returns(propertyInfoName);
+
+            _comparisonResult.AddError(baseType, toCompareType, propertyInfoMock.Object);
 
             var result = _comparisonResult;
 
