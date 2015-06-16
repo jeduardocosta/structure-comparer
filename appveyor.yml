@@ -1,0 +1,22 @@
+version: 1.0.{build}
+skip_tags: true
+configuration: Release
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '{version}'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '{version}'
+environment:
+  COVERALLS_REPO_TOKEN:
+    secure: /13Wi3c7vN/I03xvEU4Tz9gK9Yj6Mhy09YOvtBLqIJoDXp5SdETex7qyh+HNzuL7
+before_build:
+  - nuget restore ".\StructureComparer.sln"
+build:
+  project: .\StructureComparer.sln
+  verbosity: minimal
+test_script:
+- ps: >-
+    .\packages\OpenCover.4.5.3723\OpenCover.Console.exe -register:user -target:nunit-console.exe -register:user "-targetargs:""test\StructureComparer.Tests\bin\$env:CONFIGURATION\StructureComparer.Tests.dll"" /noshadow" -filter:"+[StructureComparer*]*" -output:opencoverCoverage.xml
+
+    .\packages\coveralls.net.0.5.0\csmacnz.Coveralls.exe --opencover -i opencoverCoverage.xml --repoToken $env:COVERALLS_REPO_TOKEN --commitId $env:APPVEYOR_REPO_COMMIT --commitBranch $env:APPVEYOR_REPO_BRANCH --commitAuthor $env:APPVEYOR_REPO_COMMIT_AUTHOR --commitEmail $env:APPVEYOR_REPO_COMMIT_AUTHOR_EMAIL --commitMessage $env:APPVEYOR_REPO_COMMIT_MESSAGE --jobId $env:APPVEYOR_JOB_ID
