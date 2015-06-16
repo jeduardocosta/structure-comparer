@@ -5,4 +5,4 @@
 [![Nuget version](https://img.shields.io/nuget/v/StructureComparer.svg)](https://www.nuget.org/packages/StructureComparer/)
 [![Nuget downloads](https://img.shields.io/nuget/dt/StructureComparer.svg)](https://www.nuget.org/packages/StructureComparer/)
 
-Structure comparison (primitive and complex type, enums)
+Structure comparison (primitive and complex type, enums) 
