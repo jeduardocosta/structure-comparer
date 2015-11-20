@@ -4,12 +4,6 @@ using StructureComparer.Extensions;
 
 namespace StructureComparer.Validators
 {
-    internal interface IPropertyValidator
-    {
-        bool ValidateName(PropertyInfo baseProperty, PropertyInfo toCompareProperty);
-        bool ValidateNameExistance(PropertyInfo baseProperty, IEnumerable<PropertyInfo> toCompareTypeProperties);
-    }
-
     internal class PropertyValidator : IPropertyValidator
     {
         public bool ValidateName(PropertyInfo baseProperty, PropertyInfo toCompareProperty)

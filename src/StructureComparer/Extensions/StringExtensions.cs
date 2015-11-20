@@ -8,10 +8,10 @@ namespace StructureComparer.Extensions
         {
             if (Contains(value, "property name"))
             {
-                return string.Format("{0} from '{1}'", value, propertyName);
+                return $"{value} from '{propertyName}'";
             }
 
-            return string.Format("{0}. Property name: '{1}'", value, propertyName);
+            return $"{value}. Property name: '{propertyName}'";
         }
 
         private static bool Contains(string value, string comparisonValue)

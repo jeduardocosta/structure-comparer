@@ -5,11 +5,6 @@ using StructureComparer.Models;
 
 namespace StructureComparer.Validators.Flows
 {
-    internal interface IValidationFlow
-    {
-        StructureComparisonResult Validate(Type baseType, Type toCompareType, string propertyName);
-    }
-
     internal class ValidationFlow : IValidationFlow
     {
         private readonly ITypeValidator _typeValidator;
@@ -38,7 +33,9 @@ namespace StructureComparer.Validators.Flows
                 var validatonResult = validation(baseType, toCompareType);
 
                 if (!validatonResult.AreEqual)
+                {
                     comparisonResult.AddError(validatonResult.DifferencesString.AppendPropertyName(propertyName));
+                }
             }
 
             return comparisonResult;

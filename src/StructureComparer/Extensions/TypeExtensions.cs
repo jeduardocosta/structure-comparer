@@ -10,7 +10,9 @@ namespace StructureComparer.Extensions
         public static Type GetBaseTypeFromTypeNullable(this Type type)
         {
             if (TypeValidator.IsNullable(type))
+            { 
                 return Nullable.GetUnderlyingType(type);
+            }
 
             return type;
         }

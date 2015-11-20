@@ -3,11 +3,6 @@ using StructureComparer.Extensions;
 
 namespace StructureComparer.Validators.Flows.Factories
 {
-    internal interface IValidationFlowFactory
-    {
-        IValidationFlow Create(Type type);
-    }
-
     internal class ValidationFlowFactory : IValidationFlowFactory
     {
         private readonly ITypeValidator _typeValidator;
@@ -27,10 +22,14 @@ namespace StructureComparer.Validators.Flows.Factories
             var baseTypeValidator = GetBaseTypeValidator(type);
 
             if (_typeValidator.IsEnum(type))
+            {
                 return new ValidationFlow(typeValidator, baseTypeValidator);
+            }
 
             if (_typeValidator.IsPrimitive(type))
+            { 
                 return new ValidationFlow(typeValidator, baseTypeValidator);
+            }
 
             return new ValidationFlow(typeValidator, baseTypeValidator);
         }
@@ -38,13 +37,19 @@ namespace StructureComparer.Validators.Flows.Factories
         public IBaseTypeValidator GetBaseTypeValidator(Type type)
         {
             if (_typeValidator.IsNullable(type))
+            { 
                 type = type.GetBaseTypeFromTypeNullable();
+            }
 
             if (_typeValidator.IsEnum(type))
+            {
                 return new EnumTypeValidator();
+            }
 
             if (_typeValidator.IsPrimitive(type))
+            {
                 return new PrimitiveTypeValidator();
+            }
 
             return new ComplexTypeValidator();
         }

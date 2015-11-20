@@ -35,13 +35,14 @@ namespace StructureComparer.Validators
                 toCompareType = GetEnumTypeFromNullableType(toCompareType);
             }
 
-
             foreach (var validation in _validations)
             {
                 var validatonResult = validation(baseType, toCompareType);
 
                 if (!validatonResult.AreEqual)
+                {
                     comparisonResult.AddError(validatonResult.DifferencesString);
+                }
             }
 
             return comparisonResult;
@@ -58,8 +59,7 @@ namespace StructureComparer.Validators
 
             if (!areEqual)
             {
-                comparisonResult.AddError(string.Format("Failed to validate structures. Type 1: '{0}', Type 2: '{1}'. Reason: divergent enum names",
-                                                          baseType.Name, toCompareType.Name));
+                comparisonResult.AddError($"Failed to validate structures. Type 1: '{baseType.Name}', Type 2: '{toCompareType.Name}'. Reason: divergent enum names");
             }
 
             return comparisonResult;
@@ -76,8 +76,7 @@ namespace StructureComparer.Validators
 
             if (!areEqual)
             {
-                comparisonResult.AddError(string.Format("failed to validate structures. Type 1: '{0}', Type 2: '{1}'. Reason: divergent enum values",
-                                                          baseType.Name, toCompareType.Name));
+                comparisonResult.AddError($"failed to validate structures. Type 1: '{baseType.Name}', Type 2: '{toCompareType.Name}'. Reason: divergent enum values");
             }
 
             return comparisonResult;

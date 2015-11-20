@@ -8,12 +8,6 @@ using StructureComparer.Validators.Flows.Factories;
 
 namespace StructureComparer
 {
-    public interface IStructureComparer
-    {
-        StructureComparisonResult Compare(Type baseType, Type toCompareType);
-        StructureComparisonResult Compare<T1, T2>();
-    }
-
     public class StructureComparer : IStructureComparer
     {
         private readonly ITypeValidator _typeValidator;
@@ -46,10 +40,14 @@ namespace StructureComparer
         public StructureComparisonResult Compare(Type baseType, Type toCompareType)
         {
             if (_typeValidator.IsEnum(baseType) && _typeValidator.IsEnum(toCompareType))
+            {
                 return CreateResultByEnumValidation(baseType, toCompareType);
+            }
 
             if (!_typeValidator.ValidatePropertiesNumber(baseType, toCompareType))
+            {
                 _comparisonResult.AddError(CreateNumberOfPropertiesUnsuccessfulResult(baseType, toCompareType).DifferencesString);
+            }
 
             var baseTypeProperties = baseType.GetProperties();
             var toCompareTypeProperties = toCompareType.GetProperties();
@@ -64,8 +62,11 @@ namespace StructureComparer
                 else
                 {
                     var comparisonResultFromTypeValidaton = ValidateByValidationFlow(baseTypeProperty, toCompareTypeProperties);
+
                     if (!comparisonResultFromTypeValidaton.AreEqual)
+                    {
                         _comparisonResult.AddError(comparisonResultFromTypeValidaton.DifferencesString);
+                    }
                 }
             }
 
@@ -91,7 +92,9 @@ namespace StructureComparer
             var comparisonResult = _enumTypeValidator.Validate(baseType, toCompareType);
 
             if (!comparisonResult.AreEqual)
+            {
                 _comparisonResult.AddError(comparisonResult.DifferencesString);
+            }
 
             return _comparisonResult;
         }
@@ -105,7 +108,7 @@ namespace StructureComparer
 
         private static string CreateDistinctPropertyNamesErrorMessage(PropertyInfo baseTypeProperty, Type toCompareType)
         {
-            return string.Format("property name '{0}' was not found in type '{1}'", baseTypeProperty.Name, toCompareType.Name);
+            return $"property name '{baseTypeProperty.Name}' was not found in type '{toCompareType.Name}'";
         }
     }
 }

@@ -6,18 +6,6 @@ using StructureComparer.Models;
 
 namespace StructureComparer.Validators
 {
-    internal interface ITypeValidator
-    {
-        bool IsPrimitive(Type type);
-        bool IsEnum(Type type);
-        bool IsComplexType(Type type);
-        bool IsEnumerableType(Type type);
-        bool IsNullable(Type type);
-
-        StructureComparisonResult ValidateName(Type baseType, Type toCompareType);
-        bool ValidatePropertiesNumber(Type baseType, Type toCompareType);
-    }
-
     internal class TypeValidator : ITypeValidator
     {
         private readonly IEnumerable<Type> _additionalPrimitiveTypes = new[]
@@ -66,7 +54,9 @@ namespace StructureComparer.Validators
             var areEqual = baseTypeName == toCompareTypeName;
 
             if (!areEqual)
+            {
                 comparisonResult.AddError(baseType, toCompareType);
+            }
 
             return comparisonResult;
         }
@@ -112,7 +102,9 @@ namespace StructureComparer.Validators
         private Type GetCurrentTypeOrBaseTypeFromNullableType(Type type)
         {
             if (IsNullable(type))
+            {
                 return type.GetBaseTypeFromTypeNullable();
+            }
 
             return type;
         }

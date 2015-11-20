@@ -7,15 +7,9 @@ namespace StructureComparer.Models
 {
     public class StructureComparisonResult
     {
-        public bool AreEqual
-        {
-            get { return !HasErrors(); } 
-        }
+        public bool AreEqual => !HasErrors();
 
-        public string DifferencesString 
-        {
-            get { return GenerateDifferencesString(); }
-        }
+        public string DifferencesString => GenerateDifferencesString();
 
         private readonly IList<string> _errors;
 
@@ -31,18 +25,19 @@ namespace StructureComparer.Models
 
         internal void AddError(Type baseType, Type toCompareType, string additionalErrorMessage = null)
         {
-            var unsuccessfulResultMessage = string.Format("Failed to validate structures. Type 1: '{0}', Type 2: '{1}'",
-                                                          baseType.Name, toCompareType.Name);
+            var unsuccessfulResultMessage = $"Failed to validate structures. Type 1: '{baseType.Name}', Type 2: '{toCompareType.Name}'";
 
             if (!string.IsNullOrWhiteSpace(additionalErrorMessage))
+            {
                 unsuccessfulResultMessage += ". Reason: " + additionalErrorMessage;
+            }
 
             _errors.Add(unsuccessfulResultMessage);
         }
 
         internal void AddError(Type baseType, Type toCompareType, PropertyInfo property)
         {
-            var additionalErrorMessage = string.Format("divergent property: {0}", property.Name);
+            var additionalErrorMessage = $"divergent property: {property.Name}";
             AddError(baseType, toCompareType, additionalErrorMessage);
         }
 
@@ -54,7 +49,9 @@ namespace StructureComparer.Models
         private string GenerateDifferencesString()
         {
             if (_errors.Any())
+            { 
                 return string.Join(Environment.NewLine, _errors);
+            }
 
             return string.Empty;
         }
