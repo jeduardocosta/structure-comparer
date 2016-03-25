@@ -30,5 +30,17 @@ namespace StructureComparer.Tests.Extensions
 
             obtained.Should().Be(expected);
         }
+
+        [Test]
+        public void Contains_GivenValueAndComparisonValueThatExists_ShouldBeTrue()
+        {
+            "abc-123-def".Contains("123").Should().BeTrue();
+        }
+
+        [Test]
+        public void Contains_GivenValueAndComparisonValueThatNotExists_ShouldBeFalse()
+        {
+            "abc-123-def".Contains("456").Should().BeFalse();
+        }
     }
 }
