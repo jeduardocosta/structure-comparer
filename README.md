@@ -5,6 +5,13 @@
 [![Nuget version](https://img.shields.io/nuget/v/StructureComparer.svg)](https://www.nuget.org/packages/StructureComparer/)
 [![Nuget downloads](https://img.shields.io/nuget/dt/StructureComparer.svg)](https://www.nuget.org/packages/StructureComparer/)
 
+Project Homepage: https://github.com/jeduardocosta/StructureComparer
+
+Available on NuGet as well: https://www.nuget.org/packages/StructureComparer
+
+###Description
+
+
 A .NET library that it allows for comparison of primitive, value and enum types. It can be used to ensure the equality between entities.
 
 ###Example Usage###
