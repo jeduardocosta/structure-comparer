@@ -5,8 +5,6 @@
 [![Nuget version](https://img.shields.io/nuget/v/StructureComparer.svg)](https://www.nuget.org/packages/StructureComparer/)
 [![Nuget downloads](https://img.shields.io/nuget/dt/StructureComparer.svg)](https://www.nuget.org/packages/StructureComparer/)
 
-Project Homepage: https://github.com/jeduardocosta/StructureComparer
-
 Available on NuGet as well: https://www.nuget.org/packages/StructureComparer
 
 ###Description
@@ -16,25 +14,25 @@ A .NET library that it allows for comparison of primitive, value and enum types.
 
 ###Example Usage###
 
-Use StructureComparer class from  IStructureComparer contract and the Compare method to do comparisons.
+Use StructureComparer static class and the Compare method to do comparisons.
 
 ```cs
-IStructureComparer comparer = new StructureComparer();
+StructureComparer.Compare
 ```
 
 #### Example 1 ( Check the equality using object types )####
 
-```
+```cs
 var customer = new Customer();
 var customerDto = new CustomerDTO();
 
-var result = comparer.Compare(typeof(customer), typeof(customerDto));
+var result = StructureComparer.Compare(typeof(customer), typeof(customerDto));
 ```
 
 #### Example 2 ( Check the equality using generics )####
 
-```
-var result = comparer.Compare<Customer, CustomerDTO>();
+```cs
+var result = StructureComparer.Compare<Customer, CustomerDTO>();
 ```
 
 #### Comparison Result ####
