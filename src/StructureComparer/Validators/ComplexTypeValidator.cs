@@ -8,19 +8,14 @@ namespace StructureComparer.Validators
     internal class ComplexTypeValidator : IBaseTypeValidator
     {
         private readonly IEnumerable<Func<Type, Type, StructureComparisonResult>> _validations;
-        
         private readonly ITypeValidator _typeValidator;
-        private readonly IStructureComparer _structureComparer;
 
-        internal ComplexTypeValidator(ITypeValidator typeTypeValidator, 
-            IStructureComparer structureComparer)
+        internal ComplexTypeValidator(ITypeValidator typeTypeValidator)
         {
             _typeValidator = typeTypeValidator;
-            _structureComparer = structureComparer;
         }
 
-        public ComplexTypeValidator()
-            : this(new TypeValidator(), new StructureComparer())
+        public ComplexTypeValidator() : this(new TypeValidator())
         {
             _validations = new List<Func<Type, Type, StructureComparisonResult>>
             {
@@ -54,7 +49,7 @@ namespace StructureComparer.Validators
                 toCompareComplexType = ExtractTypeCollection(toCompareType).FirstOrDefault();
             }
 
-            var comparisonResult = _structureComparer.Compare(baseComplexType, toCompareComplexType);
+            var comparisonResult = StructureComparer.Compare(baseComplexType, toCompareComplexType);
             return comparisonResult;
         }
 

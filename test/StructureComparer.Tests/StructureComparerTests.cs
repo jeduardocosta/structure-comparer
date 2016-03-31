@@ -11,21 +11,13 @@ namespace StructureComparer.Tests
     [TestFixture]
     public class StructureComparerTests
     {
-        private IStructureComparer _comparer;
-
-        [SetUp]
-        public void SetUp()
-        {
-            _comparer = new StructureComparer();
-        }
-
         [Test]
         public void Compare_GivenTwoIdenticalEnums_ShouldValidate()
         {
             var fakeEnumA = typeof(FakeEnum);
             var fakeEnumB = typeof(FakeEnum);
 
-            var result = _comparer.Compare(fakeEnumA, fakeEnumB);
+            var result = StructureComparer.Compare(fakeEnumA, fakeEnumB);
 
             result.AreEqual.Should().BeTrue();
         }
@@ -33,7 +25,7 @@ namespace StructureComparer.Tests
         [Test]
         public void Compare_GivenTwoDifferentEnums_ShouldNotValidate()
         {
-            var result = _comparer.Compare<FakeEnum, FakeEnumWrongValues>();
+            var result = StructureComparer.Compare<FakeEnum, FakeEnumWrongValues>();
 
             result.AreEqual.Should().BeFalse();
         }
@@ -41,7 +33,7 @@ namespace StructureComparer.Tests
         [Test]
         public void Compare_GivenTwoTypesWithDifferentPropertyNumbers_ShouldNotValidate()
         {
-            var result = _comparer.Compare<FakeOrder, FakeCustomer>();
+            var result = StructureComparer.Compare<FakeOrder, FakeCustomer>();
 
             result.AreEqual.Should().BeFalse();
         }
@@ -49,7 +41,7 @@ namespace StructureComparer.Tests
         [Test]
         public void Compare_GivenTwoTypesWithDifferentPropertyNames_ShouldNotValidate()
         {
-            var result = _comparer.Compare<FakeCustomer, FakeCustomerWithDifferentPropertyName>();
+            var result = StructureComparer.Compare<FakeCustomer, FakeCustomerWithDifferentPropertyName>();
 
             result.AreEqual.Should().BeFalse();
         }
@@ -60,7 +52,7 @@ namespace StructureComparer.Tests
             var fakeCustomerA = typeof(FakeCustomer);
             var fakeCustomerB = typeof(FakeCustomer);
 
-            var result = _comparer.Compare(fakeCustomerA, fakeCustomerB);
+            var result = StructureComparer.Compare(fakeCustomerA, fakeCustomerB);
 
             result.AreEqual.Should().BeTrue();
         }
@@ -68,7 +60,7 @@ namespace StructureComparer.Tests
         [Test]
         public void Compare_GivenTwoIntegerObjects_ShouldValidate()
         {
-            var result = _comparer.Compare<int, int>();
+            var result = StructureComparer.Compare<int, int>();
 
             result.AreEqual.Should().BeTrue();
         }
@@ -76,7 +68,7 @@ namespace StructureComparer.Tests
         [Test]
         public void Compare_GivenTwoFakeEnumObjects_ShouldValidate()
         {
-            var result = _comparer.Compare<FakeEnum, FakeEnum>();
+            var result = StructureComparer.Compare<FakeEnum, FakeEnum>();
 
             result.AreEqual.Should().BeTrue();
         }
@@ -84,7 +76,7 @@ namespace StructureComparer.Tests
         [Test]
         public void Compare_GivenStructureAFakeCustomerAndStructureBFakeCustomer_ShouldValidate()
         {
-            var result = _comparer.Compare<StructureA.FakeCustomer, StructureB.FakeCustomer>();
+            var result = StructureComparer.Compare<StructureA.FakeCustomer, StructureB.FakeCustomer>();
 
             result.AreEqual.Should().BeTrue();
         }
@@ -97,7 +89,7 @@ namespace StructureComparer.Tests
                            "Failed to validate structures. Type 1: 'FakeEnum', Type 2: 'FakeEnumDifferentNames'. Reason: divergent enum names. Property name: 'Enum' from 'FakeClass3' from 'FakeClass2'" + Environment.NewLine +
                            "Failed to validate structures. Type 1: 'FakeClass1', Type 2: 'FakeClass1'. Reason: property name 'FullName' was not found in type 'FakeClass1'";
 
-            var result = _comparer.Compare<StructureA.FakeClass1, StructureB.FakeClass1>();
+            var result = StructureComparer.Compare<StructureA.FakeClass1, StructureB.FakeClass1>();
 
             result.DifferencesString.Should().Be(expected);
         }

@@ -42,7 +42,6 @@
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Extensions\PropertyInfoExtensions.cs" />
-    <Compile Include="IStructureComparer.cs" />
     <Compile Include="Models\StructureComparisonResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StructureComparer.cs" />
