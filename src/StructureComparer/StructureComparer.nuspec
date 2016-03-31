@@ -11,7 +11,8 @@
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <description>$description$</description>
     <releaseNotes>
-      First implementations
+      1.1.0 - StructureComparer as static class
+      1.0.0 - First implementations
     </releaseNotes>
     <copyright>Copyright 2015</copyright>
     <tags>structure comparison type reflection enum complex type primitive</tags>
