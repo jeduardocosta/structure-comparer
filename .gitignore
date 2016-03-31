@@ -2,6 +2,7 @@
 ## Project 
 #################
 bin/
+build/
 obj/
 Tools/
 artifacts/

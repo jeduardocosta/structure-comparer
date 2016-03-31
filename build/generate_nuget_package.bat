@@ -1,1 +1,0 @@
-..\.nuget\NuGet.exe pack ..\src\StructureComparer\StructureComparer.csproj -Prop Configuration=Release
